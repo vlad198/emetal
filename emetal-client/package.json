@@ -42,5 +42,8 @@
   "devDependencies": {
     "redux-devtools-extension": "^2.13.8"
   },
-  "proxy": "http://localhost:8081"
+  "proxy": "http://localhost:8081",
+  "engines": {
+    "node": "10.x"
+  }
 }
