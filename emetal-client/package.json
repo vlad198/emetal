@@ -41,7 +41,7 @@
     ]
   },
   "devDependencies": {},
-  "proxy": "https://emetal.herokuapp.com/",
+  "proxy": "http://localhost:8081",
   "engines": {
     "node": "10.x"
   }
