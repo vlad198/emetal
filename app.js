@@ -10,18 +10,17 @@ const app = express();
 // if (process.env.NODE_ENV !== "test")
 connectDB();
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("./emetal-client/build"));
-}
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "client" + "build" + "index.html"));
-});
-
 app.use(cors());
 app.use(cookieParser());
 app.use(express.json());
 
-app.use("/auth", AuthRouter);
+app.use("/api/auth", AuthRouter);
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("../emetal-client/build"));
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname + "../emetal-client/build/index.html"));
+  });
+}
 
 module.exports = app;

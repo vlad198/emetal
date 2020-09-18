@@ -34,7 +34,7 @@ export const login = (userData) => {
   return (dispatch) => {
     dispatch(loginRequest());
     userApi
-      .post("/auth/login", userData)
+      .post("/api/auth/login", userData)
       .then((res) => dispatch(loginSuccess(res.data)))
       .catch((err) => dispatch(loginFail(err)));
   };
@@ -64,7 +64,7 @@ export const isAuth = () => {
   return (dispatch) => {
     dispatch(isAuthRequest());
     userApi
-      .get("/auth/authenticated")
+      .get("/api/auth/authenticated")
       .then((res) => dispatch(isAuthSuccess(res.data)))
       .catch((err) => dispatch(isAuthFail(err)));
   };
@@ -80,6 +80,6 @@ export const logoutSuccess = () => {
 
 export const logout = () => {
   return (dispatch) => {
-    userApi.get("/auth/logout").then((res) => dispatch(logoutSuccess()));
+    userApi.get("/api/auth/logout").then((res) => dispatch(logoutSuccess()));
   };
 };

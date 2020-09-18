@@ -22,7 +22,7 @@ instance.interceptors.response.use(
       if (err.response.status === 401 && err.config && !err.config._rety) {
         originalReq._rety = true;
 
-        let res = fetch("/auth/refreshToken", {
+        let res = fetch("/api/auth/refreshToken", {
           method: "GET",
           mode: "cors",
           cache: "no-cache",
