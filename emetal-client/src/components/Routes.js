@@ -10,8 +10,8 @@ const Routes = ({ auth }) => {
   return (
     <Switch>
       <Route exact path="/login" component={Login} />
-      <PrivateRoute auth={auth} exact path="/" component={Home} />
-      <Route component={NotFound} />
+      <PrivateRoute exact path="/" auth={auth} component={Home} />
+      <Route path="*" exact={true} component={NotFound} />
     </Switch>
   );
 };
