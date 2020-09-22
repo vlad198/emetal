@@ -5,13 +5,19 @@ import Home from "../pages/Home/Home";
 import Login from "../pages/Login/Login";
 import { connect } from "react-redux";
 import NotFound from "../pages/NotFound/NotFound";
+import Profile from "../pages/Profile/Profile";
+import FrontPage from "../pages/FrontPage/FrontPage";
 
 const Routes = ({ auth }) => {
   return (
     <Switch>
       <Route exact path="/login" component={Login} />
-      <PrivateRoute exact path="/" auth={auth} component={Home} />
-      <Route path="*" exact={true} component={NotFound} />
+      <Route exact path="/" component={FrontPage} />
+      <PrivateRoute auth={auth}>
+        <Route exact path="/home" component={Home} />
+        <Route exact path="/profile" component={Profile} />
+      </PrivateRoute>
+      <Route component={NotFound} />
     </Switch>
   );
 };

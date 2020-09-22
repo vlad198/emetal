@@ -1,23 +1,9 @@
-import React from "react";
+import React, { Fragment } from "react";
 import { Redirect, Route } from "react-router";
 
-const PrivateRoute = ({ component: Component, auth, ...rest }) => {
-  console.log("Private route..");
-
-  return (
-    <Route
-      {...rest}
-      render={(props) =>
-        auth ? (
-          <Component {...props} />
-        ) : (
-          <Redirect
-            to={{ pathname: "/login", state: { from: props.location } }}
-          />
-        )
-      }
-    />
-  );
+const PrivateRoute = (props) => {
+  if (props.auth) return <Fragment>{props.children}</Fragment>;
+  return <Redirect to="/login" />;
 };
 
 export default PrivateRoute;

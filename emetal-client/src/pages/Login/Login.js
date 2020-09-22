@@ -82,7 +82,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = (dispatch) => {
   return {
     login: (userData) => dispatch(login(userData)),
-    isAuthenticated: () => dispatch(push("/")),
+    isAuthenticated: () => dispatch(push("/home")),
   };
 };
 

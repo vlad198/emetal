@@ -1,11 +1,11 @@
-import React, { Fragment } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { connect } from "react-redux";
 import "./index.css";
 
 const Navbar = ({ auth }) => {
   return (
-    <Fragment>
+    <section>
       <nav className="navbar navbar-light navbar-expand-md">
         <div className="container-fluid">
           <Link to="#" className="navbar-brand" href="#">
@@ -160,7 +160,7 @@ const Navbar = ({ auth }) => {
           </div>
         </nav>
       )}
-    </Fragment>
+    </section>
   );
 };
 
