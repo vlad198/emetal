@@ -10,7 +10,7 @@ const Login = ({ isAuthenticated, login, auth }) => {
     if (auth === true) {
       isAuthenticated();
     }
-  }, [auth, isAuthenticated]);
+  }, [auth]);
 
   const [user, setUser] = useState({
     email: "",

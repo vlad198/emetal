@@ -1,6 +1,11 @@
-const User = require("../models/User");
+const User = require("../models/User/User");
 const bcrypt = require("bcrypt");
-const { registerValidation, loginValidation } = require("../utils/validation");
+const {
+  individualRegisterValidation,
+  companyRegisterValidation,
+  adminRegisterValidation,
+  loginValidation,
+} = require("../utils/validation");
 const {
   createVerifyToken,
   verifyJWTtoken,
@@ -13,7 +18,21 @@ const transporter = require("../config/nodemailer");
 
 const register = async (req, res) => {
   // validate input data
-  const { error } = registerValidation(req.body);
+  let error;
+
+  switch (req.body.role) {
+    case "individual":
+      error = individualRegisterValidation(req.body).error;
+      break;
+    case "company":
+      error = companyRegisterValidation(req.body).error;
+      break;
+    case "admin":
+      error = adminRegisterValidation(req.body).error;
+      break;
+    default:
+      return res.status(400).send("Invalid role");
+  }
 
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -27,12 +46,7 @@ const register = async (req, res) => {
 
   // create new User
 
-  const newUser = new User({
-    name,
-    email,
-    password,
-    role,
-  });
+  const newUser = new User(req.body);
 
   // generate verify token
   const verifyToken = createVerifyToken(
@@ -40,9 +54,9 @@ const register = async (req, res) => {
     process.env.VERIFY_TOKEN_SECRET
   );
 
-  const link = `http://${req.get("host")}/auth/verify/${verifyToken}`;
+  const link = `http://${req.get("host")}/api/auth/verify/${verifyToken}`;
 
-  const html = `Hello ${newUser.name}, <br><br> Please click on the link to verify your email.<br><a href="${link}">Click here to verify</a>`;
+  const html = `Hello ${newUser.email}, <br><br> Please click on the link to verify your email.<br><a href="${link}">Click here to verify</a>`;
 
   try {
     await newUser.save();
@@ -71,13 +85,19 @@ const verifyEmail = async (req, res) => {
     // update user
     await User.findOneAndUpdate(
       { _id: payload._id },
-      { $set: { verified: true } }
+      { $set: { verifyEmail: true } }
     );
 
     res.status(201).send("Account verified");
   } catch (err) {
     res.status(400).send(err);
   }
+};
+
+// NOTE: VERIFY ACCOUNT BY ADMIN
+
+const verifyAdmin = async (req, res) => {
+  const _id = req.header("_id");
 };
 
 // NOTE: LOGIN
@@ -94,7 +114,8 @@ const login = async (req, res) => {
   if (!user) return res.status(400).send("Invalid credentials");
 
   // check if account is verified
-  if (!user.verified) return res.status(400).send("Please verify your email.");
+  if (!user.verifyEmail)
+    return res.status(400).send("Please verify your email.");
 
   // check if password is correct
   const validPassword = await bcrypt.compare(req.body.password, user.password);
@@ -113,14 +134,26 @@ const login = async (req, res) => {
     process.env.REFRESH_TOKEN_SECRET
   );
 
-  const { _id, name, email } = user;
+  const {
+    _id,
+    email,
+    role,
+    phone,
+    individualInfo,
+    companyInfo,
+    adminInfo,
+  } = user;
 
   res.cookie("refreshToken", refreshToken, { httpOnly: true }).send({
     accessToken,
     user: {
       _id,
-      name,
       email,
+      role,
+      phone,
+      individualInfo,
+      companyInfo,
+      adminInfo,
     },
   });
 };

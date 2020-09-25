@@ -1,17 +1,17 @@
 const mongoose = require("mongoose");
+const adminSchema = require("./adminSchema");
+const individualSchema = require("./individualSchema");
+const companySchema = require("./companySchema");
 const bcrypt = require("bcrypt");
 
 const userSchema = new mongoose.Schema({
-  name: {
+  phone: {
     type: String,
     required: true,
-    min: 6,
-    max: 30,
   },
   email: {
     type: String,
     required: true,
-    min: 6,
     max: 30,
     lowercase: true,
   },
@@ -21,19 +21,18 @@ const userSchema = new mongoose.Schema({
     min: 6,
     max: 30,
   },
-  date: {
-    type: Date,
-    default: Date.now,
-  },
-  verified: {
+  verifyEmail: {
     type: Boolean,
     default: false,
   },
   role: {
     type: String,
-    enum: ["admin", "user"],
+    enum: ["individual", "company", "admin"],
     required: true,
   },
+  individualInfo: individualSchema,
+  companyInfo: companySchema,
+  adminInfo: adminSchema,
 });
 
 userSchema.pre("save", async function (next) {

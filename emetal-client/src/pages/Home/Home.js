@@ -9,7 +9,7 @@ const Home = ({ logout, user }) => {
 
   return (
     <div>
-      <h1>Hello {user.name}</h1>
+      <h1>Hello</h1>
       <button className="btn btn-primary" onClick={handleLogout}>
         Logout
       </button>

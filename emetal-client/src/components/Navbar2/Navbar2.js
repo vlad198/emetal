@@ -43,19 +43,19 @@ const Navbar2 = ({ auth }) => {
               <li className="dropdown">
                 <img src={Icon} />{" "}
                 <div className="navbar_text">
-                  Fabricanti <i class="fas fa-caret-right"></i>
+                  Fabricanti <i className="fas fa-caret-right"></i>
                 </div>
               </li>
               <li className="dropdown">
                 <img src={Icon} />{" "}
                 <div className="navbar_text">
-                  Fabricanti <i class="fas fa-caret-right"></i>
+                  Fabricanti <i className="fas fa-caret-right"></i>
                 </div>
               </li>
               <li className="dropdown">
                 <img src={Icon} />{" "}
                 <div className="navbar_text">
-                  Fabricanti <i class="fas fa-caret-right"></i>
+                  Fabricanti <i className="fas fa-caret-right"></i>
                 </div>
               </li>
             </ul>
@@ -63,7 +63,7 @@ const Navbar2 = ({ auth }) => {
           <div className="toggle">
             <i
               onClick={() => setNavigation(!navigation)}
-              class="fas fa-bars"
+              className="fas fa-bars"
             ></i>
           </div>
         </div>

@@ -1,17 +1,33 @@
 import { push } from "connected-react-router";
-import React, { Component, useEffect } from "react";
+import React, { Component, Fragment, useEffect } from "react";
 import { connect } from "react-redux";
 
 const Profile = ({ user, auth, unAuthorized }) => {
   useEffect(() => {
     if (!auth) unAuthorized();
-  }, [auth, unAuthorized]);
+  }, [auth]);
 
   return (
     <div>
       <ul>
-        <li>Name : {user.name}</li>
         <li>Email : {user.email}</li>
+        <li>Rol : {user.role}</li>
+        {user.companyInfo ? (
+          <Fragment>
+            <li>Numele Companiei : {user.companyInfo.companyName}</li>
+            <li>CUI : {user.companyInfo.CUI}</li>
+          </Fragment>
+        ) : user.individualInfo ? (
+          <Fragment>
+            <li>Nume : {user.individualInfo.firstName}</li>
+            <li>Prenume : {user.individualInfo.lastName}</li>
+          </Fragment>
+        ) : (
+          <Fragment>
+            <li>Nume : {user.adminInfo.firstName}</li>
+            <li>Prenume : {user.adminInfo.lastName}</li>
+          </Fragment>
+        )}
       </ul>
     </div>
   );
