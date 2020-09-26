@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 
 const Profile = ({ user, auth, unAuthorized }) => {
   useEffect(() => {
+    document.title = "Profile Page";
     if (!auth) unAuthorized();
   }, [auth]);
 

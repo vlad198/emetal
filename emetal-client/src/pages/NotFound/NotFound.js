@@ -1,5 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 
 export default function NotFound() {
-  return <div>Error 404.Page not found.</div>;
+  useEffect(() => {
+    document.title = "Not Found Page";
+  }, []);
+  return (
+    <div>
+      <title>Not Found</title>
+      Error 404.Page not found.
+    </div>
+  );
 }

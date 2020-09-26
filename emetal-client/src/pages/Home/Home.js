@@ -1,8 +1,12 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { logout } from "../../redux/user/userActions";
 import { connect } from "react-redux";
 
 const Home = ({ logout, user }) => {
+  useEffect(() => {
+    document.title = "Home Page";
+  }, []);
+
   const handleLogout = () => {
     logout();
   };

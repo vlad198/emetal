@@ -3,14 +3,15 @@ import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { login } from "../../redux/user/userActions";
 import "./index.css";
-import { Link } from "react-router-dom";
+import { Link, Redirect } from "react-router-dom";
 
 const Login = ({ isAuthenticated, login, auth }) => {
   useEffect(() => {
-    if (auth === true) {
-      isAuthenticated();
-    }
-  }, [auth]);
+    document.title = "Login Page";
+    // if (auth === true) {
+    //   isAuthenticated();
+    // }
+  }, []);
 
   const [user, setUser] = useState({
     email: "",
@@ -28,6 +29,9 @@ const Login = ({ isAuthenticated, login, auth }) => {
     e.preventDefault();
     login(user);
   };
+
+  if (auth) return <Redirect to="/home" />;
+
   return (
     <div className="login-clean background">
       <form method="post" onSubmit={handleSubmit}>
