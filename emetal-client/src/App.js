@@ -5,6 +5,8 @@ import { ConnectedRouter } from "connected-react-router";
 import { isAuth } from "./redux/user/userActions";
 import Footer from "./components/Footer/Footer";
 import Navbar2 from "./components/Navbar2/Navbar2";
+import Register from "./pages/Register/Register";
+import Notification from "./components/Notification/Notification";
 
 function App({ history, firstLoad, isAuth }) {
   useLayoutEffect(() => isAuth(), []);
@@ -15,6 +17,7 @@ function App({ history, firstLoad, isAuth }) {
     <ConnectedRouter history={history}>
       <Navbar2 />
       <Routes />
+      {/* <Register /> */}
       <Footer />
     </ConnectedRouter>
   );

@@ -23,6 +23,9 @@ const Navbar2 = ({ auth }) => {
             <li>
               <a href="#">Contact</a>
             </li>
+            <li>
+              <Link to="/register">Register</Link>
+            </li>
           </ul>
           <Link
             style={{ textDecoration: "none" }}

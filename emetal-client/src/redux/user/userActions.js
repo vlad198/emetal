@@ -1,4 +1,8 @@
 import userApi from "../../api/userApi";
+import {
+  addNotification,
+  filterNotification,
+} from "../notification/notificationActions";
 
 import {
   LOGIN_SUCCESS,
@@ -8,6 +12,9 @@ import {
   LOGOUT,
   LOGIN_REQUEST,
   IS_AUTHENTICATED_REQUEST,
+  REGISTER_REQUEST,
+  REGISTER_SUCCESS,
+  REGISTER_FAIL,
 } from "./userTypes";
 
 // LOGIN
@@ -81,5 +88,53 @@ export const logoutSuccess = () => {
 export const logout = () => {
   return (dispatch) => {
     userApi.get("/api/auth/logout").then((res) => dispatch(logoutSuccess()));
+  };
+};
+
+// REGISTER
+
+export const registerRequest = () => ({
+  type: REGISTER_REQUEST,
+});
+
+export const registerSuccess = (data) => ({
+  type: REGISTER_SUCCESS,
+  payload: data,
+});
+
+export const registerFail = (err) => ({
+  type: REGISTER_FAIL,
+  payload: err.message,
+});
+
+export const register = (userData) => {
+  return (dispatch) => {
+    dispatch(registerRequest());
+    userApi
+      .post("/api/auth/register", userData)
+      .then((res) => {
+        dispatch(registerSuccess(res.data));
+        dispatch(filterNotification());
+        dispatch(
+          addNotification({
+            status: "success",
+            title: "Registration",
+            message: "Success",
+            date: Date.now(),
+          })
+        );
+      })
+      .catch((err) => {
+        dispatch(registerFail(err));
+        dispatch(filterNotification());
+        dispatch(
+          addNotification({
+            status: "fail",
+            title: "Registration",
+            message: "Fail",
+            date: Date.now(),
+          })
+        );
+      });
   };
 };

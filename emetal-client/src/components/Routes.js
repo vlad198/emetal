@@ -7,11 +7,13 @@ import { connect } from "react-redux";
 import NotFound from "../pages/NotFound/NotFound";
 import Profile from "../pages/Profile/Profile";
 import FrontPage from "../pages/FrontPage/FrontPage";
+import Register from "../pages/Register/Register";
 
 const Routes = ({ auth }) => {
   return (
     <Switch>
       <Route exact path="/login" component={Login} />
+      <Route exact path="/register" component={Register} />
       <Route exact path="/" component={FrontPage} />
       <PrivateRoute auth={auth}>
         <Route exact path="/home" component={Home} />
