@@ -1,8 +1,5 @@
+import { toast } from "react-toastify";
 import userApi from "../../api/userApi";
-import {
-  addNotification,
-  filterNotification,
-} from "../notification/notificationActions";
 
 import {
   LOGIN_SUCCESS,
@@ -42,8 +39,14 @@ export const login = (userData) => {
     dispatch(loginRequest());
     userApi
       .post("/api/auth/login", userData)
-      .then((res) => dispatch(loginSuccess(res.data)))
-      .catch((err) => dispatch(loginFail(err)));
+      .then((res) => {
+        dispatch(loginSuccess(res.data));
+        toast.success("Login success.");
+      })
+      .catch((err) => {
+        dispatch(loginFail(err));
+        toast.error("Login fail.");
+      });
   };
 };
 
@@ -114,27 +117,11 @@ export const register = (userData) => {
       .post("/api/auth/register", userData)
       .then((res) => {
         dispatch(registerSuccess(res.data));
-        dispatch(filterNotification());
-        dispatch(
-          addNotification({
-            status: "success",
-            title: "Registration",
-            message: "Success",
-            date: Date.now(),
-          })
-        );
+        toast.success("Registration success.");
       })
       .catch((err) => {
         dispatch(registerFail(err));
-        dispatch(filterNotification());
-        dispatch(
-          addNotification({
-            status: "fail",
-            title: "Registration",
-            message: "Fail",
-            date: Date.now(),
-          })
-        );
+        toast.error("Registration fail.");
       });
   };
 };

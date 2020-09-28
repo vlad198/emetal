@@ -1,7 +1,6 @@
 import React, { Component, Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
-import NotificationContainer from "../../components/NotificationContainer/NotificationContainer";
 import { register } from "../../redux/user/userActions";
 import "./index.css";
 
@@ -69,7 +68,6 @@ const Register = ({
 
   return (
     <div className="container" style={{ position: "relative" }}>
-      <NotificationContainer />
       <h1 style={{ textAlign: "center" }}>Register</h1>
       <form onSubmit={handleSubmit}>
         <div className="registerType">
