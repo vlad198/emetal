@@ -18,7 +18,6 @@ function App({ history, firstLoad, isAuth }) {
       <Navbar2 />
       <ToastContainer autoClose={2000} />
       <Routes />
-      {/* <Register /> */}
       <Footer />
     </ConnectedRouter>
   );

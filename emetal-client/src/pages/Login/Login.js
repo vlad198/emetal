@@ -5,12 +5,9 @@ import { login } from "../../redux/user/userActions";
 import "./index.css";
 import { Link, Redirect } from "react-router-dom";
 
-const Login = ({ isAuthenticated, login, auth }) => {
+const Login = ({ login, auth, loadingAction }) => {
   useEffect(() => {
     document.title = "Login Page";
-    // if (auth === true) {
-    //   isAuthenticated();
-    // }
   }, []);
 
   const [user, setUser] = useState({
@@ -59,11 +56,23 @@ const Login = ({ isAuthenticated, login, auth }) => {
         </div>
         <div className="form-group">
           <button
-            onClick={handleSubmit}
-            className="btn btn-primary btn-block"
+            style={{ marginBottom: 10 }}
             type="submit"
+            className="btn btn-primary btn-block"
+            disabled={loadingAction}
           >
-            Conectează-te
+            {!loadingAction ? (
+              "Conecteaza-te"
+            ) : (
+              <div>
+                <span
+                  className="spinner-border spinner-border-sm"
+                  role="status"
+                  aria-hidden="true"
+                ></span>
+                <span className="sr-only">Loading...</span>
+              </div>
+            )}
           </button>
         </div>
         <Link to="#" className="forgot" href="#" style={{ fontSize: "15px" }}>
@@ -80,13 +89,12 @@ const Login = ({ isAuthenticated, login, auth }) => {
 
 const mapStateToProps = (state) => ({
   auth: state.user.auth,
-  loading: state.user.loading,
+  loadingAction: state.user.loadingAction,
 });
 
 const mapDispatchToProps = (dispatch) => {
   return {
     login: (userData) => dispatch(login(userData)),
-    isAuthenticated: () => dispatch(push("/home")),
   };
 };
 
