@@ -1,6 +1,7 @@
 import React, { Component, Fragment, useEffect, useState } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router";
+import { toast } from "react-toastify";
 import { register } from "../../redux/user/userActions";
 import "./index.css";
 
@@ -48,7 +49,7 @@ const Register = ({
     if (user.password === user.confirmPassword) {
       delete user["confirmPassword"];
       register(user);
-    }
+    } else toast.error("Register fail.");
 
     setUser({
       individualInfo: {
